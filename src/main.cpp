@@ -107,6 +107,13 @@ int main(int argc, char *argv[])
     std::pair < std::vector <cv::Point2f>, std::vector <cv::Point2f> > inlierPoints = matcher.getInlierPoints();
     cv::Mat cropImage = stichImages (imgInput1, inlierPoints.first, imgInput2, inlierPoints.second);
     cv::imwrite(argv[4], cropImage);
+
+    finalMatches = matcher.run(imgInput1, cropImage);
+    std::cout << "Size Matched Points: " << finalMatches.size() << std::endl;
+    keyPoints = matcher.getKeyPoints();
+    cv::drawMatches(imgInput1, keyPoints.first, cropImage, keyPoints.second, finalMatches, matchImage);
+    cv::imwrite(argv[5], matchImage);
+
     // cv::imshow("Image Matches", matchImage);
    	// cv::waitKey(0);
 	return 0;
