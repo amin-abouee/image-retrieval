@@ -108,9 +108,10 @@ int main(int argc, char *argv[])
     cv::Mat cropImage = stichImages (imgInput1, inlierPoints.first, imgInput2, inlierPoints.second);
     cv::imwrite(argv[4], cropImage);
 
-    finalMatches = matcher.run(imgInput1, cropImage);
+    RobustFeatureMatching matcher2(0.8, 1.0, 0.99, 6);
+    finalMatches = matcher2.run(imgInput1, cropImage);
     std::cout << "Size Matched Points: " << finalMatches.size() << std::endl;
-    keyPoints = matcher.getKeyPoints();
+    keyPoints = matcher2.getKeyPoints();
     cv::drawMatches(imgInput1, keyPoints.first, cropImage, keyPoints.second, finalMatches, matchImage);
     cv::imwrite(argv[5], matchImage);
 
